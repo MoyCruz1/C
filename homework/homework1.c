@@ -4,13 +4,14 @@
 #define IN 1
 #define OUT 0
 
-int main(){
+int main()
+{
 
 	int i, l, n, m;
 	char input [MAX];
 	char output [MAX];
 
-	printf("insertar texto formato HTML:  ");
+	printf("Escribir texto HTML: ");
 	gets(input);
 	l= strlen(input);
 	n= OUT;
