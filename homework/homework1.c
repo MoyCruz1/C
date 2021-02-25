@@ -14,7 +14,7 @@ int main(){
 	gets(input);
 	l= strlen(input);
 	n= OUT;
-	printf("output");
+	printf(output);
 
 	for (i=0; i<l ; ++i){
 
