@@ -19,14 +19,16 @@ int main()
 
 	for (i=0; i<l ; ++i){
 
-		if (input [i] == '<')
-		n = IN;
-		if (input [i] == '>')
-		n = OUT;
-		if( n == OUT)
-		output[i] = input[i];
-
-		if (output[i] == '>' )
-		printf("%c" , output[i]);
+		if (input[i] == '<')  //take only words inside >---<
+      n = IN;
+    if (input[i] == '>')
+      n = OUT;       
+    if (n == OUT)
+      output[i] = input[i+1]; //copy from input to output array
+    
+    if (output[i] == '<') //eliminate '<'
+        output[i] = ' ';
+        
+    printf("%c",output[i]); //print output text
 	}
 }
