@@ -1,174 +1,262 @@
-  
+#include <stdlib.h>
 #include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
 
-#define MAX 100  
-#define NUMBER '0'
+int nums[26];
+int saveN[10];
+int pos = 0;
 
-int 	getop(char []); 		
-void 	push(double); 			
-double 	pop(void); 				
-int 	options(int, char[]); 		
+int GetSetNumByChar(char s, int num, int getNum, int setNum, char nextS);
+int ValidateGetSet(int idx, int num, int getNum, int setNum, char nextS);//guardar o colocar
+int CasesCalculator(char character);
 
-char 	var;					
-double 	variables[1000]; 			
-int 	op1, op3;					
-
-
-main() {
-
-	int type; 
-	double op2; 
-	char s[MAX];
+int main()
 	
-	while ((type = getop(s)) != EOF) {
-        switch (type) {
+{
+    int c, isOverwrite, countInto; //variables
+    char s;
+    char text[100];//amplitud
 
-            case NUMBER:
-                push(atof(s));
-                break;
-            case '+':
-                push(pop() + pop());
-                break;
-            case '*':
-                push(pop() * pop());
-                break;
-            case '-':
-                op2 = pop();
-                push(pop() - op2);
-                break; 
-            case '/':
-                op2 = pop();
-                if (op2 != 0.0)
-                    push(pop() / op2);
-                else
-                    printf("error: zero divisor\n");
-                break;
-            case '\n':
-                printf("\t%.8g\n", pop());
-                break;
-            default:
-                if(s[0] != '=' && strlen(s) > 1 && variables[var] == 0)
-					printf("error: unknown command %s\n", s); 
-                break;
+    printf("Type the variables needed, example: 'a = 1', to finish press 2 times 'enter': \n");
+    isOverwrite = 0;
+    countInto = 0;
+    while (text[0] || isOverwrite)//ciclo variables necesarias
+    {
+        gets(text);
+        if (text[0])
+        {
+            countInto = 0; //sin letra es enter
+            char letter, nextChar;
+            int number;
+            letter = text[0];//variable en x1
+            nextChar = text[2]; //sig. variable en x3
+            
+            char numText[10]; 
+            int i, j, isNum;
+            j = 0;
+            isNum = 0;
+            for(i = 0; text[i]; i++)//contado
+		    
+            {
+                if (text[i] == '=')//si encuentra un "=" da paso a:
+                {
+                    i = i + 2; // posiciones x+2
+                    isNum = 1; //true
+                }
+                if (isNum)
+                {
+                    numText[j] = text[i]; 
+                    j++;
+                }
+            }
+            number = atoi(numText); //conversión a enteros
+        isOverwrite = GetSetNumByChar(letter, number, 0, 1, nextChar);
+        for(i = 0; numText[i]; i++)
+        {
+            numText[i] = ' '; //reset
+            }
+    }
+        else //
+        {
+            countInto++; 
+            if(countInto == 2)
+            {
+                isOverwrite = 0;
+            }
         }
-    }    
-} 
-
-double 	val[MAX]; 					
-int 	sp = 0; 				
-
-void push(double f) {
-	
-	int ops;
-	if (sp < MAX)
-		val[sp++] = f;
-	else
-		printf("error: stack full, can't push %g\n", f);
-	
-	if(op1 && var != 0) {
-		if(variables[var] == 0 || op3 == 1)
-			variables[var] = f;
-		else {
-			printf("Do you want to overwrite the value of the variable? (%c)\n1.- YES 0.- NO \n", var);
-			scanf("%i", &ops);
-			if(ops)
-				variables[var] = f;
-		}
-	op1 = 0;		
-	}		
+    }
+    printf("Now this is the calculator\n");
+    printf("Write variables in the form Polaca inverse, Example: a b +\n");
+    //Calculadora
+    while ((c = getchar()) != EOF)
+    {
+        s = (char)c;
+        CasesCalculator(s);
+    }
+    return 0;
 }
 
-double pop(void) {
-	
-	if (sp > 0)
-		return val[--sp];
-	else {
-		printf("error: stack empty\n");
-		return 0.0;
-	}
-} 
-
-#include <ctype.h>
-
-int 	getch(void); 			   
-void 	ungetch(int); 		
-
-int getop(char s[]) {
-
-	int i, c;	
-	
-	while ((s[0] = c = getch()) == ' ' || c == '\t');
-	s[1] = '\0';
-
-	i = 0;
-	if (c == '-')                     
-		if (!isdigit(s[++i] = c = getch())) {
-			ungetch(c);               
-			c = s[0];
-		}
-	
-	if (c == ':') {
-		s[++i] = c = getch();
-		op3 = 1;
-	}
-	
-	if (c == '=') {
-		s[++i] = c = getch();
-		op1 = 1;
-	}
-	
-	if (isalpha(c))
-		return options(c, s);
-		
-	if (!isdigit(c) && c != '.')
-		return c; 
-	
-	if (isdigit(c)) {
-		while (isdigit(s[++i] = c = getch()));
-	}
-	if (c == '.') 
-		while (isdigit(s[++i] = c = getch()));
-
-	if (c != EOF)
-		ungetch(c);
-	
-	return NUMBER;
+int GetSetNumByChar(char s, int num, int getNum, int setNum, char nextS)
+{
+    switch(s){ //casos abecedario
+        case 'A':
+        case 'a':
+            return ValidateGetSet(0, num, getNum, setNum, nextS);
+        
+        case 'B':
+        case 'b':
+            return ValidateGetSet(1, num, getNum, setNum, nextS);
+            
+        case 'C':
+        case 'c':
+            return ValidateGetSet(2, num, getNum, setNum, nextS);
+        
+        case 'D':
+        case 'd':
+            return ValidateGetSet(3,num, getNum, setNum, nextS);
+        
+        case 'E':
+        case 'e':
+            return ValidateGetSet(4, num, getNum, setNum, nextS);
+        
+        case 'F':
+        case 'f':
+            return ValidateGetSet(5, num, getNum, setNum, nextS);
+        
+        case 'G':
+        case 'g':
+            return ValidateGetSet(6, num, getNum, setNum, nextS);
+        
+        case 'H':
+        case 'h':
+            return ValidateGetSet(7, num, getNum, setNum, nextS);
+        
+        case 'I':
+        case 'i':
+            return ValidateGetSet(8, num, getNum, setNum, nextS);
+        
+        case 'J':
+        case 'j':
+            return ValidateGetSet(9, num, getNum, setNum, nextS);
+        
+        case 'K':
+        case 'k':
+            return ValidateGetSet(10, num, getNum, setNum, nextS);
+        
+        case 'L':
+        case 'l':
+            return ValidateGetSet(11, num, getNum, setNum, nextS);
+        
+        case 'M':
+        case 'm':
+            return ValidateGetSet(12, num, getNum, setNum, nextS);
+        
+        case 'N':
+        case 'n':
+            return ValidateGetSet(13, num, getNum, setNum, nextS);
+        
+        case 'O':
+        case 'o':
+            return ValidateGetSet(14, num, getNum, setNum, nextS);
+        
+        case 'P':
+        case 'p':
+            return ValidateGetSet(15, num, getNum, setNum, nextS);
+        
+        case 'Q':
+        case 'q':
+            return ValidateGetSet(16, num, getNum, setNum, nextS);
+        
+        case 'R':
+        case 'r':
+            return ValidateGetSet(17, num, getNum, setNum, nextS);
+        
+        case 'S':
+        case 's':
+            return ValidateGetSet(18, num, getNum, setNum, nextS);
+        
+        case 'T':
+        case 't':
+            return ValidateGetSet(19, num, getNum, setNum, nextS);
+        
+        case 'U':
+        case 'u':
+            return ValidateGetSet(20, num, getNum, setNum, nextS);
+        
+        case 'V':
+        case 'v':
+            return ValidateGetSet(21, num, getNum, setNum, nextS);
+        
+        case 'W':
+        case 'w':
+            return ValidateGetSet(22, num, getNum, setNum, nextS);
+        
+        case 'X':
+        case 'x':
+            return ValidateGetSet(23, num, getNum, setNum, nextS);
+        
+        case 'Y':
+        case 'y':
+            return ValidateGetSet(24, num, getNum, setNum, nextS);
+            
+        case 'Z':
+        case 'z':
+            return ValidateGetSet(25, num, getNum, setNum, nextS);
+            
+      default:
+       printf("Without variable, type it");
+        break;
+    }
+    return 0;
 }
 
-char 	buf[MAX]; 					
-int 	bufp = 0; 					
-
-int getch(void) {
-
-	return (bufp > 0) ? buf[--bufp] : getchar();
+int ValidateGetSet(int idx, int num, int getNum, int setNum, char nextS)
+{
+    if(setNum)
+    {
+        
+        if(nextS == ':')
+        {
+            //con : se guarda
+            nums[idx] = num;
+        }
+        else if (nums[idx])
+        {
+            //aviso de sobreescripción 
+            printf("Are you sure to rewrite? 1 for yes or 0 for no\n");
+            int save;
+            scanf ("%d", &save);
+            if (save)//si es verdadero reemplaza
+            {
+                nums[idx] = num;
+            }
+            return 1;
+        }
+        else
+        {
+            //sin dato, guarda
+            nums[idx] = num;
+        }
+    }
+    if (getNum) //guardar un numero
+    {
+        return nums[idx];
+    }
+    return 0;
 }
 
-void ungetch(int c) {
-
-	if (bufp >= MAX)
-		printf("ungetch: too many characters\n");
-	else
-		buf[bufp++] = c;
+int CasesCalculator(char character) //polaca inverse casos
+{
+    switch(character)
+    {
+        case '+': //según la suma, últimas 2 x
+            saveN[pos - 2] = saveN[pos - 2] + saveN[pos - 1];
+            pos = pos - 1;
+            break;
+        case '-':
+            saveN[pos - 2] = saveN[pos - 2] - saveN[pos - 1];
+            pos = pos - 1;
+            break;
+        case '*':
+            saveN[pos - 2] = saveN[pos - 2] * saveN[pos - 1];
+            pos = pos - 1;
+            break;
+        case '/':
+            saveN[pos - 2] = saveN[pos - 2] / saveN[pos - 1];
+            pos = pos - 1;
+            break;
+        case ' ': //nada
+            break;
+        case '\n': //da resultado de última x
+            printf("result = %d\n", saveN[0]);
+            pos = 0; //reset x
+            break;
+        default:
+        //cuando sean letras
+        saveN[pos] = GetSetNumByChar(character, 0, 1, 0, '\0');
+        pos++;
+        break;
+    }
+    return 0;
 }
 
-int options(int c, char s[]) {
-	
-	int i = 0, o;
-	double op2, n = 0;
-	
-	s[i] = c;
-	while (isalpha(s[++i] = c = getch()));
-	s[i] = '\0';
-	ungetch(c);
-	
-	if(i == 1)
-		var = tolower(s[0]);
-	else 
-		var = 0;
-	if(variables[var] != 0)
-		push(variables[var]);
-
-	return 0;
-}
+//basado en el de mi compañero Braian Sotelo
