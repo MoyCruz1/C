@@ -96,9 +96,9 @@ void menu(int OUT[ROWS][COLUMNS],int u[ROWS][COLUMNS]) {
 
         system("cls");
         show(OUT,u);
-        printf("There's %d bombs left\n",bombs);
+        printf(" %d bombs left\n",bombs);
         printf("1.Scan  2.Check  3.Uncheck \n");
-        printf("Choose an option: ");
+        printf("Choose a number: ");
         scanf("%d", &chs);
 
         if (chs > 3 || chs < 1) {
