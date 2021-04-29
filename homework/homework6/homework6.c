@@ -38,3 +38,5 @@ int main()
 	}
 	return 0;
 }
+
+//based on Hectormtz work
