@@ -7,3 +7,5 @@ struct data {
 } *people ;
 void welcome(struct tm*);
 int isEmployee(void);
+
+//based on hectormtz work//
