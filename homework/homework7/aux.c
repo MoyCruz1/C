@@ -7,7 +7,9 @@ void welcome(struct tm* ntime) {
 
 int isEmployee() {
     int res = 1;
-    printf("Are you an Employee?, write 1 for employee, 0 for admin\n");
+    printf("What is your charge?, write 1 for employee, 0 for admin\n");
     scanf("%d", &res);
     return res;
 }
+
+//based on hectormtz work//
