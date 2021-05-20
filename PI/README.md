@@ -12,7 +12,7 @@ This is a program of the fun game of Blackjack21
 
 4. The numeral cards 2 to 10 have their face values.
 
-5. The Ace will have a value of 1 or 11, depending on the case
+5. The Ace will have a value of 1 or 11, depending on the case.
 
 
 In this program you'll have the chance to play the fun and awesome 
