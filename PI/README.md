@@ -10,9 +10,9 @@ This is a program of the fun game of Blackjack21
 
 3.-The croupier will stand with a soft 17.
 
-4. The numeral cards 2 to 10 have their face values.
+4.- The numeral cards 2 to 10 have their face values.
 
-5. The Ace will have a value of 1 or 11, depending on the case.
+5.- The Ace will have a value of 1 or 11, depending on the case.
 
 
 
