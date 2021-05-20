@@ -14,6 +14,8 @@ This is a program of the fun game of Blackjack21
 
 5.- The Ace will have a value of 1 or 11, depending on the case.
 
+The instructions are in the program
+
 Link to my youtube video: 
 
 
