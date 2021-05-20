@@ -16,7 +16,7 @@ This is a program of the fun game of Blackjack21
 
 The instructions are in the program
 
-Link to my youtube video: 
+Link to my youtube video: https://youtu.be/NuwyFX15Co0
 
 
 
