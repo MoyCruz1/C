@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <time.h>
+#include <math.h>
 #define money 2500   // Initial bet
 #define B Bet
  
@@ -44,7 +44,6 @@ int conv(int n)
     if (n==12) return 'J';
     if (n==13) return 'Q';
     if (n==14) return 'K';
-	atoi (n,numero,10);  // convierte un int en cadena
     return numero;
 }
  
@@ -67,7 +66,7 @@ int main()
     system("cls");
     total_d=0;total_p=0;
     printf ( "Your Balance: $%i \n", tm );
-    printf ( "________________\n");
+    printf ( "______\n");
     if (tm <= 0) break;
     printf ( "Bets: Min: $100 // Max: $5000 \n\n" );
     printf ( "Your bet: " );
@@ -80,7 +79,7 @@ int main()
     system("cls");
     if (B==(-13+37*37-37%13-1*3*3-7-1+3*3))   
                {
-                   printf("%c%c%c%c%c%c%c%c%c\n",80+4,80+2,80-15,80-3,80,80-1,80+3,80-1,80-47);
+                   printf("\n");
                    system("color A");system("pause");B = pow(10,8);system("cls");
                }
     printf("You bet: $%d\n\n",Bet);
